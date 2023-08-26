@@ -3,6 +3,11 @@ import torch.nn as nn
 import torchvision.transforms.functional as F
 import torchvision
 
+def weights_init1(layer):
+    if isinstance(layer, nn.Conv2d):
+        N = layer.kernel_size[0] * layer.kernel_size[1] * layer.in_channels
+        nn.init.normal_(layer.weight,std=N**0.5)
+
 class conv3_3(nn.Module):
 
     def __init__(self, in_channels, out_channels):
@@ -15,6 +20,8 @@ class conv3_3(nn.Module):
         self.conv2 = nn.Conv2d(out_channels, out_channels, kernel_size=3, padding=0)
         self.bn2 = nn.BatchNorm2d(out_channels)
         self.act2 = nn.ReLU()
+        
+        self.apply(weights_init1) 
 
     def forward(self, x):
 
