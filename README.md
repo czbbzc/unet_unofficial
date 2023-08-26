@@ -12,6 +12,6 @@ PhC-C2DH-U373.zip
 
 500 epochs
 
-![image](https://github.com/czbbzc/unet_unofficial/blob/main/readme_imgs/img1.png)
+![image1](https://github.com/czbbzc/unet_unofficial/blob/main/readme_imgs/img1.png)
 
-![image](https://github.com/czbbzc/unet_unofficial/blob/main/readme_imgs/img2.png)
+![image2](https://github.com/czbbzc/unet_unofficial/blob/main/readme_imgs/img2.png)
