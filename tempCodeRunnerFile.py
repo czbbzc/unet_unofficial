@@ -1,5 +1,0 @@
-m1 = Image.open(mask1)
-# m1 = np.array(m1)
-# m1 = m1 * (255/9)
-# m1 = Image.fromarray(m1)
-# m1.show()
