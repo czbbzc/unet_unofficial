@@ -51,13 +51,9 @@ class up_conv(nn.Module):
 
         x = self.up(x)
         x = self.conv(x)
-        
-        t = torchvision.transforms.Resize(size=(x.shape[2]+1, x.shape[3]+1))
-        
+        t = torchvision.transforms.Resize(size=(x.shape[2]+1, x.shape[3]+1))        
         x = t(x)
         
-        # t1 = torchvision.transforms.Resize(size=(3,3), interpolation=F._interpolation_modes_from_int(2))
-
         return x
     
 
@@ -130,7 +126,8 @@ class unet(nn.Module):
         
         return x
     
-# a = unet(1, 9)
+a = unet(1, 2)
+print(a)
 
 # for layer in a.modules():
 #     if isinstance(layer, nn.Conv2d):
