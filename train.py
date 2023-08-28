@@ -172,7 +172,7 @@ if __name__ == '__main__':
                 
                 pred_pic = pred_mask[0]
                 # pred_pic[pred_pic>0] = 1
-                pred_pic = pred_pic.float/(args.num_classes - 1)
+                pred_pic = pred_pic.float()/(args.num_classes - 1)
                 pred_pic = pred_pic.unsqueeze(0)
                 writer.add_image('Train/pred', pred_pic, epoch)  
                 
@@ -233,12 +233,14 @@ if __name__ == '__main__':
                         writer.add_image('Eval/origin', origin, epoch)
                         
                         gt = torch.as_tensor(targets[0])
-                        gt[gt>0] = 1
+                        # gt[gt>0] = 1
+                        gt = gt.float()/(args.num_classes - 1)
                         gt = gt.unsqueeze(0)
                         writer.add_image('Eval/gt', gt, epoch)
                         
                         pred_pic = pred_mask[0]
-                        pred_pic[pred_pic>0] = 1
+                        # pred_pic[pred_pic>0] = 1
+                        pred_pic = pred_pic.float()/(args.num_classes - 1)
                         pred_pic = pred_pic.unsqueeze(0)
                         writer.add_image('Eval/pred', pred_pic, epoch)  
                         

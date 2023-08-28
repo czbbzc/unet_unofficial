@@ -126,8 +126,8 @@ class unet(nn.Module):
         
         return x
     
-a = unet(1, 2)
-print(a)
+# a = unet(1, 2)
+# print(a)
 
 # for layer in a.modules():
 #     if isinstance(layer, nn.Conv2d):
