@@ -39,6 +39,7 @@ class MyDataset(Dataset):
         self.img_transform = transforms.Compose(
             [
                 transforms.ToTensor(),
+                # transforms.Normalize((0.5),(0.5)),
                 transforms.Resize((pic_size, pic_size))])
         
         self.mask_transform = transforms.Compose(
