@@ -4,18 +4,11 @@ import torch
 import torch.nn as nn
 from torchvision import transforms
 import torchvision.transforms.functional as F
-from torch.utils.data import DataLoader, random_split
-from torch.utils.tensorboard import SummaryWriter
-import tqdm
-from pathlib import Path
-import datetime
 import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
 
 from model import unet
-from dataset import MyDataset
-from metrics import SegmentationMetric
 
 
 def read_args():
@@ -24,6 +17,7 @@ def read_args():
     parser.add_argument('--size_input', '-s', type=int, default=572, help='size of model input')
     parser.add_argument('--model', '-m', type=str, default='predict_input/499.pth', help='predict model input')
     parser.add_argument('--num_classes', '-c', type=int, default=9, help='number of classes')
+    parser.add_argument('--save_path', '-p', type=str, default='./predict_input', help='predict pic input')
     return parser.parse_args()
 
 if __name__ == '__main__':
@@ -60,6 +54,11 @@ if __name__ == '__main__':
     ax[1].imshow(pred_pic, cmap='gray')
     plt.show()
     
+    save_pic = Image.fromarray(pred_pic)
+    save_name = args.input.split('/')[-1]
+    save_name = save_name.split('.')[0]+'_result.'+save_name.split('.')[1]
+    save_pic.save(os.path.join(args.save_path, save_name))
+    
     # classes = pred_pic.max() + 1
     # fig, ax = plt.subplots(1, classes + 1)
     # ax[0].set_title('Input image')
@@ -70,12 +69,6 @@ if __name__ == '__main__':
     # plt.xticks([]), plt.yticks([])
     # plt.show()
     
-    
-    
-    # pred_pic = pred_pic*int(255/(args.num_classes-1))
-    # print(output.shape)
-    # print(pred_pic.shape)
-    # pred_pic = Image.fromarray(pred_pic)
-    # pred_pic.show()
+
     
     
