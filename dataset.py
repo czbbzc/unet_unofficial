@@ -65,7 +65,7 @@ class MyDataset(Dataset):
         
         img = np.array(img, dtype=np.uint8)
         mask = np.array(mask, dtype=np.uint8)
-        mask[mask>0]=1
+        # mask[mask>0]=1
         
         img = self.img_transform(img.copy())
         mask = torch.as_tensor(mask.copy()).long().contiguous()
@@ -101,21 +101,43 @@ class MyDataset(Dataset):
 # print(img.shape)
 # print(mask.shape)
 
+# # max_num = 0
+# num_list = []
+
+# for j in range(len(data1)):
+#     img1, mask1 = data1[j]
+#     for i in mask1:
+#         for z in i:
+#             if (z != 0) and (z not in num_list):
+#                 print(z, type(z))
+#                 num_list.append(z)
+                
+# print(num_list)
+
 
 # dataloader1 = DataLoader(data1, batch_size=4, shuffle=True, num_workers=0, drop_last=False)
 
-# print((enumerate(dataloader1)))
+# # print((enumerate(dataloader1)))
 
 # for data in dataloader1:
 #     imgs, targets = data
-    
-#     print(dataloader1.index(data))
-    
-#     # print('i: ', i)
+
 #     print(imgs.shape)
-#     # print(imgs)
 #     print(targets.shape)
-#     # break
+    
+#     for i in targets[0]:
+#         for z in i:
+#             if (z != 0) and (z not in num_list):
+#                 print(z, type(z))
+#                 num_list.append(z)
+    
+#     break
+
+    # for i in targets:
+    #     for z in i:
+    #         if (z != 0) and (z not in num_list):
+    #             print(z, type(z))
+    #             num_list.append(z)
 
 # t1 = transforms.Resize((targets.shape[2], targets.shape[3]))
 # imgs1 = transforms.functional.resize(imgs, (targets.shape[2], targets.shape[3]))

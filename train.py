@@ -53,11 +53,11 @@ def evaluate1(pred, label, num_classes):
 
 def read_args():
     parser = argparse.ArgumentParser(description='Train')
-    parser.add_argument('--epochs', '-e', type=int, default=200, help='number of epochs')
+    parser.add_argument('--epochs', '-e', type=int, default=500, help='number of epochs')
     parser.add_argument('--batch_size', '-b', type=int, default=2, help='batch size')
     parser.add_argument('--validation', '-v', type=float, default=0.1,
                         help='percent of the data that is used as validation (0-1)')
-    parser.add_argument('--num_classes', '-c', type=int, default=2, help='number of classes')
+    parser.add_argument('--num_classes', '-c', type=int, default=9, help='number of classes')
     parser.add_argument('--img_data', '-i', type=str, default='./data/img/01', help='path of image data')
     parser.add_argument('--mask_data', '-m', type=str, default='./data/mask/01', help='path of mask data')
     parser.add_argument('--results', '-r', type=str, default='./results', help='results')
@@ -100,7 +100,7 @@ if __name__ == '__main__':
     # optimizer = torch.optim.RMSprop(model.parameters(),
     #                           lr=learning_rate, weight_decay=1e-8, momentum=0.99, foreach=True)
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
-    scheduler = torch.optim.lr_scheduler.StepLR(optimizer=optimizer, step_size=10, gamma=0.6)
+    scheduler = torch.optim.lr_scheduler.StepLR(optimizer=optimizer, step_size=20, gamma=0.6)
     grad_scaler = torch.cuda.amp.GradScaler(enabled=True)
     # loss_func = nn.CrossEntropyLoss() if args.num_classes > 1 else nn.BCELoss()
     loss_func = nn.CrossEntropyLoss()
@@ -164,13 +164,15 @@ if __name__ == '__main__':
                 origin = transforms.functional.resize(origin, (targets.shape[1], targets.shape[2])) 
                 writer.add_image('Train/origin', origin, epoch)
                 
-                gt = torch.as_tensor(targets[0])
-                gt[gt>0] = 1
+                gt = torch.as_tensor(targets[0], dtype=torch.float32)
+                # gt[gt>0] = 1
+                gt = gt/(args.num_classes - 1)
                 gt = gt.unsqueeze(0)
                 writer.add_image('Train/gt', gt, epoch)
                 
                 pred_pic = pred_mask[0]
-                pred_pic[pred_pic>0] = 1
+                # pred_pic[pred_pic>0] = 1
+                pred_pic = pred_pic.float/(args.num_classes - 1)
                 pred_pic = pred_pic.unsqueeze(0)
                 writer.add_image('Train/pred', pred_pic, epoch)  
                 
