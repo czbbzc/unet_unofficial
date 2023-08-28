@@ -99,7 +99,10 @@ if __name__ == '__main__':
     learning_rate = 1e-3
     # optimizer = torch.optim.RMSprop(model.parameters(),
     #                           lr=learning_rate, weight_decay=1e-8, momentum=0.99, foreach=True)
-    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+    # optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+    
+    optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, momentum=0.99)
+    
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer=optimizer, step_size=20, gamma=0.6)
     grad_scaler = torch.cuda.amp.GradScaler(enabled=True)
     # loss_func = nn.CrossEntropyLoss() if args.num_classes > 1 else nn.BCELoss()
